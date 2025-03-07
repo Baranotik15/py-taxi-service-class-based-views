@@ -20,7 +20,7 @@ class ManufacturerListView(ListView):
     model = Manufacturer
     queryset = Manufacturer.objects.all().order_by("name")
     paginate_by = 5
-    context_object_name = "manufacturers"
+    context_object_name = "manufacturer_list"
     template_name = "taxi/manufacturer_list.html"
 
 
@@ -28,7 +28,7 @@ class CarListView(ListView):
     model = Car
     queryset = Car.objects.select_related("manufacturer").all()
     paginate_by = 5
-    context_object_name = "cars"
+    context_object_name = "car_list"
     template_name = "taxi/car_list.html"
 
 
@@ -40,11 +40,11 @@ class CarDetailView(DetailView):
 class DriverListView(ListView):
     model = Driver
     paginate_by = 5
-    context_object_name = "drivers"
+    context_object_name = "driver_list"
     template_name = "taxi/driver_list.html"
 
 
 class DriverDetailView(DetailView):
     model = Driver
-    queryset = Driver.objects.prefetch_related("car_set__manufacturer").all()
+    queryset = Driver.objects.prefetch_related("cars__manufacturer").all()
     template_name = "taxi/driver_detail.html"
